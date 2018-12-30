@@ -1,0 +1,310 @@
+$date
+	Sun Dec 30 21:47:19 2018
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module TestBench $end
+$var wire 1 ! MEM_wen $end
+$var wire 256 " MEM_wdata [255:0] $end
+$var wire 1 # MEM_ren $end
+$var wire 1 $ MEM_ready $end
+$var wire 256 % MEM_rdata [255:0] $end
+$var wire 27 & MEM_addr [26:0] $end
+$var reg 1 ' Clk $end
+$var reg 1 ( Start $end
+$var reg 27 ) address [26:0] $end
+$var reg 1 * flag $end
+$var reg 5 + index [4:0] $end
+$var reg 22 , tag [21:0] $end
+$var integer 32 - counter [31:0] $end
+$var integer 32 . i [31:0] $end
+$var integer 32 / outfile [31:0] $end
+$var integer 32 0 outfile2 [31:0] $end
+$scope module CPU $end
+$var wire 1 1 IDATA_ren $end
+$var wire 1 ' clk_i $end
+$var wire 1 ( start_i $end
+$var wire 1 2 proc_stall $end
+$var wire 1 ! MEM_wen $end
+$var wire 256 3 MEM_wdata [255:0] $end
+$var wire 1 # MEM_ren $end
+$var wire 1 $ MEM_ready $end
+$var wire 256 4 MEM_rdata [255:0] $end
+$var wire 27 5 MEM_addr [26:0] $end
+$var wire 32 6 IDATA_rdata [31:0] $end
+$var wire 8 7 IDATA_addr [7:0] $end
+$var wire 1 8 DDATA_wen $end
+$var wire 32 9 DDATA_wdata [31:0] $end
+$var wire 1 : DDATA_ren $end
+$var wire 32 ; DDATA_rdata [31:0] $end
+$var wire 32 < DDATA_addr [31:0] $end
+$scope module Instruction_Memory $end
+$var wire 32 = IDATA_rdata [31:0] $end
+$var wire 1 1 IDATA_ren $end
+$var wire 1 ' clk_i $end
+$var wire 1 ( start_i $end
+$var wire 8 > IDATA_addr [7:0] $end
+$upscope $end
+$scope module cache $end
+$var wire 1 ' clk $end
+$var wire 1 ( proc_start $end
+$var wire 2 ? state [1:0] $end
+$var wire 1 8 proc_write $end
+$var wire 32 @ proc_wdata [31:0] $end
+$var wire 1 2 proc_stall $end
+$var wire 1 : proc_read $end
+$var wire 32 A proc_rdata [31:0] $end
+$var wire 32 B proc_addr [31:0] $end
+$var wire 1 ! mem_write $end
+$var wire 256 C mem_wdata [255:0] $end
+$var wire 1 $ mem_ready $end
+$var wire 1 # mem_read $end
+$var wire 256 D mem_rdata [255:0] $end
+$var wire 27 E mem_addr [26:0] $end
+$var wire 1 F hit $end
+$var wire 1 G dirty $end
+$var wire 27 H cache_addr [26:0] $end
+$var wire 1 I addrToMem $end
+$scope module control $end
+$var wire 1 I addrToMem $end
+$var wire 1 ' clk $end
+$var wire 1 # mem_read $end
+$var wire 1 ! mem_write $end
+$var wire 1 2 proc_stall $end
+$var wire 1 ( proc_start $end
+$var wire 1 8 proc_write $end
+$var wire 1 : proc_read $end
+$var wire 1 $ mem_ready $end
+$var wire 1 F hit $end
+$var wire 1 G dirty $end
+$var reg 2 J next_state [1:0] $end
+$var reg 2 K state [1:0] $end
+$upscope $end
+$scope module rf $end
+$var wire 1 ' clk $end
+$var wire 1 ( proc_start $end
+$var wire 2 L state [1:0] $end
+$var wire 22 M tag [21:0] $end
+$var wire 1 8 proc_write $end
+$var wire 32 N proc_wdata [31:0] $end
+$var wire 32 O proc_addr [31:0] $end
+$var wire 1 $ mem_ready $end
+$var wire 256 P mem_rdata [255:0] $end
+$var wire 5 Q index [4:0] $end
+$var wire 5 R block_offset [4:0] $end
+$var reg 27 S cache_addr [26:0] $end
+$var reg 1 G dirty $end
+$var reg 1 F hit $end
+$var reg 256 T mem_wdata [255:0] $end
+$var reg 32 U proc_rdata [31:0] $end
+$var reg 32 V reg_dirty [0:31] $end
+$var reg 32 W reg_dirty_next [0:31] $end
+$var reg 32 X reg_valid [0:31] $end
+$var reg 32 Y reg_valid_next [0:31] $end
+$var integer 32 Z i [31:0] $end
+$var integer 32 [ j [31:0] $end
+$upscope $end
+$upscope $end
+$scope module i_RISC $end
+$var wire 1 \ Branch_true $end
+$var wire 32 ] DDATA_addr [31:0] $end
+$var wire 32 ^ DDATA_rdata [31:0] $end
+$var wire 1 : DDATA_ren $end
+$var wire 32 _ DDATA_wdata [31:0] $end
+$var wire 1 8 DDATA_wen $end
+$var wire 8 ` IDATA_addr [7:0] $end
+$var wire 32 a IDATA_rdata [31:0] $end
+$var wire 1 1 IDATA_ren $end
+$var wire 1 ' clk_i $end
+$var wire 1 b isFlush $end
+$var wire 1 c proc_stall $end
+$var wire 1 ( start_i $end
+$var wire 7 d opcode [6:0] $end
+$var wire 1 e isSTALL $end
+$var wire 2 f isFWD_R2_ID [1:0] $end
+$var wire 2 g isFWD_R2_EX [1:0] $end
+$var wire 2 h isFWD_R1_ID [1:0] $end
+$var wire 2 i isFWD_R1_EX [1:0] $end
+$var wire 7 j funct7 [6:0] $end
+$var wire 3 k funct3 [2:0] $end
+$var wire 32 l WriteData [31:0] $end
+$var wire 5 m Reg_W_WB [4:0] $end
+$var wire 5 n Reg_W_MEM [4:0] $end
+$var wire 5 o Reg_W_EX [4:0] $end
+$var wire 5 p Reg_W [4:0] $end
+$var wire 5 q Reg_R2_EX [4:0] $end
+$var wire 5 r Reg_R2 [4:0] $end
+$var wire 5 s Reg_R1_EX [4:0] $end
+$var wire 5 t Reg_R1 [4:0] $end
+$var wire 1 u RegWrite_WB $end
+$var wire 1 v RegWrite_MEM $end
+$var wire 1 w RegWrite_EX $end
+$var wire 1 x RegWrite $end
+$var wire 32 y ReadData2_tmp [31:0] $end
+$var wire 32 z ReadData2_MEM [31:0] $end
+$var wire 32 { ReadData2_EX [31:0] $end
+$var wire 32 | ReadData1_tmp [31:0] $end
+$var wire 32 } ReadData1_EX [31:0] $end
+$var wire 8 ~ PCnext_ID [7:0] $end
+$var wire 8 !" PCnext [7:0] $end
+$var wire 8 "" PCin [7:0] $end
+$var wire 8 #" PCadder2 [7:0] $end
+$var wire 8 $" PCadder1 [7:0] $end
+$var wire 1 %" MemWrite_MEM $end
+$var wire 1 &" MemWrite_EX $end
+$var wire 1 '" MemWrite $end
+$var wire 1 (" MemToReg_WB $end
+$var wire 1 )" MemToReg_MEM $end
+$var wire 1 *" MemToReg_EX $end
+$var wire 1 +" MemToReg $end
+$var wire 1 ," MemRead_MEM $end
+$var wire 1 -" MemRead_EX $end
+$var wire 1 ." MemRead $end
+$var wire 12 /" Imm_S_EX [11:0] $end
+$var wire 12 0" Imm_SB [11:0] $end
+$var wire 12 1" Imm_S [11:0] $end
+$var wire 12 2" Imm_I_EX [11:0] $end
+$var wire 12 3" Imm_I [11:0] $end
+$var wire 32 4" IDATA_rdata_ID [31:0] $end
+$var wire 32 5" DDATA_rdata_WB [31:0] $end
+$var wire 1 6" Branch $end
+$var wire 32 7" ALUresult_WB [31:0] $end
+$var wire 32 8" ALUresult_MEM [31:0] $end
+$var wire 32 9" ALUresult [31:0] $end
+$var wire 3 :" ALUctrl_EX [2:0] $end
+$var wire 3 ;" ALUctrl [2:0] $end
+$var wire 2 <" ALUSrc_EX [1:0] $end
+$var wire 2 =" ALUSrc [1:0] $end
+$var reg 32 >" ALUin1 [31:0] $end
+$var reg 32 ?" ALUin2 [31:0] $end
+$var reg 32 @" ALUin2_reg [31:0] $end
+$var reg 32 A" ReadData1 [31:0] $end
+$var reg 32 B" ReadData2 [31:0] $end
+$scope module alu $end
+$var wire 3 C" ALUctrl [2:0] $end
+$var wire 32 D" ALUin1 [31:0] $end
+$var wire 32 E" ALUin2 [31:0] $end
+$var wire 32 F" and_result [31:0] $end
+$var wire 32 G" or_result [31:0] $end
+$var wire 32 H" sub_result [31:0] $end
+$var wire 32 I" mul_result [31:0] $end
+$var wire 1 J" carry $end
+$var wire 32 K" add_result [31:0] $end
+$var reg 32 L" ALUresult [31:0] $end
+$upscope $end
+$scope module control $end
+$var wire 3 M" funct3 [2:0] $end
+$var wire 7 N" funct7 [6:0] $end
+$var wire 7 O" opcode [6:0] $end
+$var wire 10 P" ctrl_signals [9:0] $end
+$var reg 2 Q" ALUSrc [1:0] $end
+$var reg 3 R" ALUctrl [2:0] $end
+$var reg 1 S" Branch $end
+$var reg 1 T" MemRead $end
+$var reg 1 U" MemToReg $end
+$var reg 1 V" MemWrite $end
+$var reg 1 W" RegWrite $end
+$upscope $end
+$scope module fwd_unit_ex $end
+$var wire 1 v RegWrite_MEM $end
+$var wire 1 u RegWrite_WB $end
+$var wire 5 X" Reg_R1_EX [4:0] $end
+$var wire 5 Y" Reg_R2_EX [4:0] $end
+$var wire 5 Z" Reg_W_MEM [4:0] $end
+$var wire 5 [" Reg_W_WB [4:0] $end
+$var reg 2 \" isFWD_R1_EX [1:0] $end
+$var reg 2 ]" isFWD_R2_EX [1:0] $end
+$upscope $end
+$scope module fwd_unit_id $end
+$var wire 1 6" Branch $end
+$var wire 1 v RegWrite_MEM $end
+$var wire 1 u RegWrite_WB $end
+$var wire 5 ^" Reg_R1 [4:0] $end
+$var wire 5 _" Reg_R2 [4:0] $end
+$var wire 5 `" Reg_W_MEM [4:0] $end
+$var wire 5 a" Reg_W_WB [4:0] $end
+$var reg 2 b" isFWD_R1_ID [1:0] $end
+$var reg 2 c" isFWD_R2_ID [1:0] $end
+$upscope $end
+$scope module pc $end
+$var wire 8 d" PCin [7:0] $end
+$var wire 1 ' clk_i $end
+$var wire 1 c proc_stall $end
+$var wire 1 ( start_i $end
+$var wire 1 e isSTALL $end
+$var reg 8 e" PCnext [7:0] $end
+$upscope $end
+$scope module r0 $end
+$var wire 32 f" IDATA_rdata [31:0] $end
+$var wire 8 g" PCnext [7:0] $end
+$var wire 1 ' clk_i $end
+$var wire 1 b isFlush $end
+$var wire 1 c proc_stall $end
+$var wire 1 ( start_i $end
+$var wire 1 e isSTALL $end
+$var reg 32 h" IDATA_rdata_ID [31:0] $end
+$var reg 8 i" PCnext_ID [7:0] $end
+$upscope $end
+$scope module r1 $end
+$var wire 112 j" ID_signals [111:0] $end
+$var wire 1 ' clk_i $end
+$var wire 1 c proc_stall $end
+$var wire 1 ( start_i $end
+$var wire 1 e isSTALL $end
+$var reg 112 k" EX_signals [111:0] $end
+$upscope $end
+$scope module r2 $end
+$var wire 73 l" EX_signals [72:0] $end
+$var wire 1 ' clk_i $end
+$var wire 1 c proc_stall $end
+$var wire 1 ( start_i $end
+$var reg 73 m" MEM_signals [72:0] $end
+$upscope $end
+$scope module r3 $end
+$var wire 71 n" MEM_signals [70:0] $end
+$var wire 1 ' clk_i $end
+$var wire 1 c proc_stall $end
+$var wire 1 ( start_i $end
+$var reg 71 o" WB_signals [70:0] $end
+$upscope $end
+$scope module rf $end
+$var wire 32 p" ReadData1 [31:0] $end
+$var wire 32 q" ReadData2 [31:0] $end
+$var wire 1 u RegWrite $end
+$var wire 5 r" Reg_R1 [4:0] $end
+$var wire 5 s" Reg_R2 [4:0] $end
+$var wire 5 t" Reg_W [4:0] $end
+$var wire 32 u" WriteData [31:0] $end
+$var wire 1 ' clk_i $end
+$var wire 1 ( start_i $end
+$upscope $end
+$scope module stall_unit $end
+$var wire 1 6" Branch $end
+$var wire 1 -" MemRead_EX $end
+$var wire 1 ," MemRead_MEM $end
+$var wire 1 w RegWrite_EX $end
+$var wire 5 v" Reg_R1 [4:0] $end
+$var wire 5 w" Reg_R2 [4:0] $end
+$var wire 5 x" Reg_W_EX [4:0] $end
+$var wire 5 y" Reg_W_MEM [4:0] $end
+$var reg 1 e isSTALL $end
+$upscope $end
+$upscope $end
+$upscope $end
+$scope module Data_Memory $end
+$var wire 27 z" DDATA_addr [26:0] $end
+$var wire 256 {" DDATA_rdata [255:0] $end
+$var wire 1 $ DDATA_ready $end
+$var wire 1 # DDATA_ren $end
+$var wire 256 |" DDATA_wdata [255:0] $end
+$var wire 1 ! DDATA_wen $end
+$var wire 1 ' clk_i $end
+$var wire 1 }" ready $end
+$var wire 1 ( start_i $end
+$var reg 256 ~" data [255:0] $end
+$upscope $end
+$upscope $end
