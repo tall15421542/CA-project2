@@ -14,10 +14,10 @@ module cache(
     mem_wdata,
     mem_ready
 );
-    
 //==== input/output definition ============================
     input          clk;
     // processor interface
+    
     input          proc_start;
     input          proc_read, proc_write;
     input   [31:0] proc_addr;
@@ -51,7 +51,6 @@ module cache(
         .mem_write(mem_write),
         .mem_ready(mem_ready)
     );
-
     RF rf(
         .clk(clk),
         .proc_start(proc_start),
@@ -96,7 +95,7 @@ module CACONTROL(
 
     assign mem_write = (state == WriteBack) | ((state == Compare) & ~hit & dirty);
     assign mem_read  = (state == Allocate) | ((state == Compare) & ~hit & ~dirty);
-    assign proc_stall = (state != Compare) | ~hit;
+    assign proc_stall = (state != Compare) | ((proc_read | proc_write) & ~hit);
     assign addrToMem = state[0] & ~((state == Compare) & ~hit & dirty);
 
     always@(*) begin
@@ -115,7 +114,6 @@ module CACONTROL(
     end
 
 endmodule
-
 module RF(
     clk,
     proc_start,
@@ -155,7 +153,6 @@ module RF(
     wire [4:0]  index;
     wire [4:0]  block_offset;
     integer i, j;
-    
     assign {tag, index, block_offset} = proc_addr;
     always @(*) begin
         hit = (reg_valid[index] & (reg_tags[index] == tag));
@@ -169,42 +166,45 @@ module RF(
         end 
     end
 
+    integer k, t;
     always @(*) begin
-        for (i=0; i<32; i=i+1) begin
-            if (i == index) begin
+        for (k=0; k<32; k=k+1) begin
+            if (k == index) begin
                 if (state == 2'b01 & proc_write & hit) begin
-                    for(j=0; j<256; j=j+4) begin 
-                        if(j == block_offset) begin 
-                            registers_next[i][j << 3 +: 31] = proc_wdata;
+                    for(t=0; t<256; t=t+4) begin 
+                        if(t == block_offset) begin 
+                            registers_next[k][t << 3 +: 31] = proc_wdata;
                         end
                     end
-                    reg_tags_next[i] = reg_tags[i];
-                    reg_valid_next[i] = reg_valid[i];
-                    reg_dirty_next[i] = 1'b1;
+                    reg_tags_next[k] = reg_tags[k];
+                    reg_valid_next[k] = reg_valid[k];
+                    reg_dirty_next[k] = 1'b1;
                 end
                 else if (state == 2'b11 & mem_ready) begin
-                    registers_next[i] = mem_rdata;
-                    reg_tags_next[i] = tag;
-                    reg_valid_next[i] = 1'b1;
-                    reg_dirty_next[i] = 1'b0;
+                    registers_next[k] = mem_rdata;
+                    reg_tags_next[k] = tag;
+                    reg_valid_next[k] = 1'b1;
+                    reg_dirty_next[k] = 1'b0;
 
                 end
                 else begin
-                    registers_next[i] = registers[i];
-                    reg_tags_next[i] = reg_tags[i];
-                    reg_valid_next[i] = reg_valid[i];
-                    reg_dirty_next[i] = reg_dirty[i];
+                    registers_next[k] = registers[k];
+                    reg_tags_next[k] = reg_tags[k];
+                    reg_valid_next[k] = reg_valid[k];
+                    reg_dirty_next[k] = reg_dirty[k];
                 end
+
+                
             end
             else begin
-                registers_next[i] = registers[i];
-                reg_tags_next[i] = reg_tags[i];
-                reg_valid_next[i] = reg_valid[i];
-                reg_dirty_next[i] = reg_dirty[i];
+                registers_next[k] = registers[k];
+                reg_tags_next[k] = reg_tags[k];
+                reg_valid_next[k] = reg_valid[k];
+                reg_dirty_next[k] = reg_dirty[k];
             end
         end
     end
-    always @(posedge clk or posedge proc_start) begin
+    always @(posedge clk) begin
         if (proc_start) begin
             for (i=0; i<32; i=i+1) begin
                 registers[i] <= registers_next[i];
@@ -214,5 +214,4 @@ module RF(
             end  
         end
     end
-
 endmodule

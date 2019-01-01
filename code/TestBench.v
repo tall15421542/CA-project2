@@ -106,11 +106,9 @@ initial begin
     
     #(`CYCLE_TIME/4);
     Start = 1;
-    $fdisplay(outfile, "done initialization");
 end
   
 always@(posedge Clk) begin
-    $fdisplay(outfile, "clock %d", counter);
 	if(counter == 150) begin	// store cache to memory
 		$fdisplay(outfile, "Flush Cache! \n");
 		for(i=0; i<32; i=i+1) begin
@@ -139,12 +137,22 @@ always@(posedge Clk) begin
     $fdisplay(outfile, "R5(a1) = %h, R13(t5) = %h, R21(s5) = %h, R29(sp) = %h", CPU.i_RISC.rf.registers[5], CPU.i_RISC.rf.registers[13], CPU.i_RISC.rf.registers[21], CPU.i_RISC.rf.registers[29]);
     $fdisplay(outfile, "R6(a2) = %h, R14(t6) = %h, R22(s6) = %h, R30(s8) = %h", CPU.i_RISC.rf.registers[6], CPU.i_RISC.rf.registers[14], CPU.i_RISC.rf.registers[22], CPU.i_RISC.rf.registers[30]);
     $fdisplay(outfile, "R7(a3) = %h, R15(t7) = %h, R23(s7) = %h, R31(ra) = %h", CPU.i_RISC.rf.registers[7], CPU.i_RISC.rf.registers[15], CPU.i_RISC.rf.registers[23], CPU.i_RISC.rf.registers[31]);
-
+    
+    // print meomery
+	$fdisplay(outfile, "Data Memory: 0x0000 = %h", Data_Memory.memory[0]);
+	$fdisplay(outfile, "Data Memory: 0x0020 = %h", Data_Memory.memory[1]);
+	$fdisplay(outfile, "Data Memory: 0x0040 = %h", Data_Memory.memory[2]);
+	$fdisplay(outfile, "Data Memory: 0x0060 = %h", Data_Memory.memory[3]);
+	$fdisplay(outfile, "Data Memory: 0x0080 = %h", Data_Memory.memory[4]);
+	$fdisplay(outfile, "Data Memory: 0x00A0 = %h", Data_Memory.memory[5]);
+	$fdisplay(outfile, "Data Memory: 0x00C0 = %h", Data_Memory.memory[6]);
+	$fdisplay(outfile, "Data Memory: 0x00E0 = %h", Data_Memory.memory[7]);
+	$fdisplay(outfile, "Data Memory: 0x0400 = %h", Data_Memory.memory[32]);
 
 	// print Data Memory
 	
 	// print Data Cache Status
-	if(CPU.cache.proc_stall && CPU.cache.state==0) begin
+	if(CPU.cache.proc_stall && CPU.cache.state==2'b01) begin
 		if(CPU.cache.rf.dirty) begin
 			if(CPU.cache.proc_write) 
 				$fdisplay(outfile2, "Cycle: %d, Write Miss, Address: %h, Write Data: %h (Write Back!)", counter, CPU.cache.proc_addr, CPU.cache.proc_wdata);

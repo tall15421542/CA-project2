@@ -21,7 +21,7 @@ module CPU  (
 
 	// wire declaration
 	wire        IDATA_ren;
-	wire [7:0]  IDATA_addr;
+	wire [31:0]  IDATA_addr;
 	wire [31:0] IDATA_rdata;
     
     wire        proc_stall;
@@ -44,9 +44,9 @@ module CPU  (
 		DDATA_wen,
 		DDATA_addr,
 		DDATA_wdata,
-		DDATA_rdata
+		DDATA_rdata,
 //----------CACHE STALL------------
-        //proc_stall
+        proc_stall
 	);
 
 	Instruction_Memory Instruction_Memory(
@@ -88,15 +88,15 @@ module RISC_Pipeline(
 		DDATA_wen,
 		DDATA_addr,
 		DDATA_wdata,
-		DDATA_rdata
-        //proc_stall
+		DDATA_rdata,
+        proc_stall
 );
 
 	input         clk_i, start_i;
 //----------I DATA interface-------		
 	input  [31:0] IDATA_rdata;
 	output        IDATA_ren;
-	output [7:0]  IDATA_addr;
+	output [31:0]  IDATA_addr;
 //----------D DATA interface-------
 	input  [31:0] DDATA_rdata;
 	output        DDATA_ren, DDATA_wen;
@@ -109,7 +109,7 @@ module RISC_Pipeline(
 	wire isFlush, isSTALL;
 
 	// IF wires
-	wire [7:0] PCnext, PCadder1, PCin;
+	wire [31:0] PCnext, PCadder1, PCin;
 
 	// ID wires
 	wire Branch_true;
@@ -147,9 +147,7 @@ module RISC_Pipeline(
 	wire RegWrite_WB, MemToReg_WB;
 	wire [4:0] Reg_W_WB;
 	wire [31:0] DDATA_rdata_WB, ALUresult_WB, WriteData;
-    wire proc_stall;
 
-    assign proc_stall = 1'b0;
 	// output
 	assign IDATA_ren = 1'b1;
 	assign IDATA_addr = PCnext;
@@ -361,8 +359,8 @@ endmodule
 
 module PC(clk_i, start_i, isSTALL, proc_stall, PCin, PCnext);
 	input            clk_i, start_i, isSTALL, proc_stall;
-	input      [7:0] PCin;
-	output reg [7:0] PCnext;
+	input      [31:0] PCin;
+	output reg [31:0] PCnext;
 
 	always @(posedge clk_i) begin
 		if (start_i) begin 
@@ -386,7 +384,7 @@ module Reg_IF_ID(
 	PCnext_ID
 );
 	input clk_i, start_i, isSTALL, isFlush, proc_stall;
-	input [7:0]  PCnext;
+	input [31:0]  PCnext;
 	input [31:0] IDATA_rdata;
 	output reg [7:0] PCnext_ID;
 	output reg [31:0] IDATA_rdata_ID;

@@ -7,7 +7,7 @@ module Instruction_Memory(
 );
 	input 		  clk_i, start_i;
 	input         IDATA_ren;
-	input  [7:0]  IDATA_addr;
+	input  [31:0]  IDATA_addr;
 	output [31:0] IDATA_rdata;
 
 	reg [31:0] memory [0:255];
@@ -43,10 +43,8 @@ module Data_Memory(
               MEM_WAIT = 1'b1;
 
     assign DDATA_rdata = data;
-    assign DDATA_ready = ready;
-    assign ready = 1'b1;
-/*
-    assign ready = (state == MEM_WAIT) & (count == 4'd9);
+
+    assign DDATA_ready = (state == MEM_WAIT) & (count == 4'd9);
 
     // Control
     always @(posedge clk_i) begin 
@@ -77,16 +75,16 @@ module Data_Memory(
             endcase 
         end
     end
-*/ 
+
     // read data 
     always @(*) begin 
-        if(start_i &  DDATA_ren) begin 
+        if(start_i & (count == 4'd8) & DDATA_ren) begin 
             data <= memory[DDATA_addr];
         end
     end 
 	
     // write data 
-    always @(*) begin
+    always @(posedge clk_i) begin
 		if (start_i & DDATA_wen) begin
 			memory[DDATA_addr] <= DDATA_wdata;
 		end
