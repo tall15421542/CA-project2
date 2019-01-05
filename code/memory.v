@@ -78,8 +78,11 @@ module Data_Memory(
 
     // read data 
     always @(*) begin 
-        if(start_i & (count == 4'd8) & DDATA_ren) begin 
-            data <= memory[DDATA_addr];
+        if(start_i & (DDATA_ready) & DDATA_ren) begin 
+            data = memory[DDATA_addr];
+        end
+        else begin 
+            data = 256'd0;
         end
     end 
 	

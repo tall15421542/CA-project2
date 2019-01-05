@@ -93,8 +93,8 @@ module CACONTROL(
     parameter Allocate   = 2'b11;
     reg [1:0] next_state;
 
-    assign mem_write = (state == WriteBack) | ((state == Compare) & ~hit & dirty);
-    assign mem_read  = (state == Allocate) | ((state == Compare) & ~hit & ~dirty);
+    assign mem_write = (state == WriteBack) | (proc_write & ((state == Compare) & ~hit & dirty));
+    assign mem_read  =  (state == Allocate) | (proc_read & ((state == Compare) & ~hit & ~dirty));
     assign proc_stall = (state != Compare) | ((proc_read | proc_write) & ~hit);
     assign addrToMem = state[0] & ~((state == Compare) & ~hit & dirty);
 

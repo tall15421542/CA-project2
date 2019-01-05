@@ -147,7 +147,7 @@ always@(posedge Clk) begin
 	$fdisplay(outfile, "Data Memory: 0x00A0 = %h", Data_Memory.memory[5]);
 	$fdisplay(outfile, "Data Memory: 0x00C0 = %h", Data_Memory.memory[6]);
 	$fdisplay(outfile, "Data Memory: 0x00E0 = %h", Data_Memory.memory[7]);
-	$fdisplay(outfile, "Data Memory: 0x0400 = %h", Data_Memory.memory[32]);
+	$fdisplay(outfile, "Data Memory: 0x0400 = %h\n\n", Data_Memory.memory[32]);
 
 	// print Data Memory
 	
